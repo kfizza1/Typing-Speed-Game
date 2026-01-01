@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed</title>
+    <style>
+        body {
+            background: #320b38;
+            color: #d7dde1;
+            text-align: center;
+            padding: 60px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, 'Arial Narrow', Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            margin-top: 40px;
+        }
+
+        #sentence {
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        input {
+            padding: 15px;
+            font-size: 18px;
+            background: #583467;
+            color: #d7dde1;
+            border: none;
+            border-radius: 30px;
+            width: 35%;
+        }
+        input::placeholder{
+            color: #d7dde1;
+        }
+
+        button {
+            border: none;
+            background: #583467;
+            color: #d7dde1;
+            padding: 10px;
+            border-radius: 10px;
+            width: 25%;
+            font-size: 17px;
+            cursor: pointer;
+        }
+        button:hover{
+            box-shadow: 3px 3px 10px #5e5362;
+        }
+
+        .result-card {
+            display: none;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            width: 40%;
+        }
+
+        .result-card h2 {
+            font-size: 2rem;
+            color: #d7dde1;
+        }
+
+        .result-card p {
+            font-size: 1.5rem;
+        }
+        @media screen and (max-width:1020px) {
+            h1{
+                font-size: 2rem;
+            }
+            #sentence{
+                font-size: 18px;
+                margin: 15px auto;
+                width: 80%;
+            }
+            input{
+                font-size: 17px;
+                width: 80%;
+            }
+            .result-card{
+                width: 75%;
+            }
+            .result-card h2{
+                font-size: 1.5rem;
+            }
+            .result-card p{
+                font-size: 1.2rem;
+            }
+            button{
+                font-size: 16px;
+                width: 40%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Typing Speed Game</h1>
+    <p id="sentence">The quick brown fox jumps over the lazy dog.</p>
+    <input type="text" id="input" placeholder="Start typing here..." autocomplete="off" />
+    <div class="result-card">
+        <h2 id="wpm-result"></h2>
+        <p id="time-result"></p>
+        <button id="reset">Try Again</button>
+    </div>
+
+    <script>
+        const sentenceEl = document.getElementById("sentence");
+        const input = document.getElementById("input");
+        const resultCard = document.querySelector(".result-card");
+        const wpmResult = document.getElementById("wpm-result");
+        const timeResult = document.getElementById("time-result");
+        const reset = document.getElementById("reset");
+
+        const sentence = sentenceEl.innerText.toLowerCase();
+        let startTime = null;
+
+        input.addEventListener("input", () => {
+            if (!startTime) startTime = Date.now();
+
+            if (input.value === sentence) {
+                const endTime = Date.now();
+                const timeTaken = (endTime - startTime) / 1000;
+                const words = sentence.split(" ").length;
+                const wpm = Math.round(words / (timeTaken / 60));
+
+                wpmResult.innerHTML = `Your typing speed: ${wpm} WPM.`;
+                timeResult.innerHTML = `Time taken: ${timeTaken.toFixed(2)} seconds`;
+                resultCard.style.display = "block";
+            }
+        });
+
+        reset.addEventListener("click", () => {
+            input.value = "";
+            startTime = null;
+            resultCard.style.display = "none";
+            input.focus();
+        })
+    </script>
+</body>
+
+</html>
