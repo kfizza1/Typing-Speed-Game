@@ -20,3 +20,6 @@ A simple typing speed test built with HTML, CSS, and JavaScript.
 
 ## Purpose
 Practice JavaScript logic, DOM manipulation, and event handling.
+
+## Live Demo
+ https://kfizza1.github.io/Typing-Speed-Game/
